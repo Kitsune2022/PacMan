@@ -44,7 +44,7 @@ class Player {
         this.position.y += this.velocity.y
     }
 }
-
+ 
 const boundaries = []
 const player = new Player({
     position: {
