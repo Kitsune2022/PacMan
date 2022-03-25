@@ -57,6 +57,23 @@ const player = new Player({
     }
 });
 
+const keys = {
+    w:{
+        pressed:false
+    },
+    a:{
+        pressed:false
+    },
+    s:{
+        pressed:false
+    },
+    d:{
+        pressed:false
+    },
+    
+}
+let lastKey = ''
+
 
 const map = [
     ['-', '-', '-', '-', '-', '-',],
@@ -85,13 +102,25 @@ map.forEach((row, i) => {
 })
 
 function animate() {
-    requestAnimationFrame(animate)
-    console.log("asdf"); 
+    requestAnimationFrame(animate) 
     c.clearRect(0,0,canvas.width,canvas.height)
     boundaries.forEach(boundary => {
         boundary.draw();
     }) 
     player.update()
+    player.velocity.y = 0;
+    player.velocity.x = 0;
+
+    if(keys.w.pressed && lastKey ==='w'){
+        player.velocity.y = -5
+    }else if(keys.a.pressed && lastKey ==='a'){
+        player.velocity.x = -5
+    }else if(keys.s.pressed && lastKey ==='s'){
+        player.velocity.y = 5
+    }else if(keys.d.pressed && lastKey ==='d'){
+        player.velocity.x = 5
+    }
+
 }
 player.draw()
 animate() 
@@ -99,37 +128,44 @@ animate()
 addEventListener('keydown', ({ key }) => {
     console.log(key)
     switch (key) {
-        case 'w':
-            player.velocity.y = -5
+        case 'w': 
+            keys.w.pressed = true
+            lastKey = 'w'
             break
         case 'a':
-            player.velocity.x = -5
+            keys.a.pressed = true
+            lastKey = 'a'
             break
         case 's':
-            player.velocity.y = 5
+            keys.s.pressed = true
+            lastKey = 's'
             break
         case 'd':
-            player.velocity.x = 5
+            keys.d.pressed = true
+            lastKey = 'd'
             break
     }
-    console.log(player.velocity)
+    console.log(keys.w.pressed)
+    console.log(keys.a.pressed)
+    console.log(keys.s.pressed)
+    console.log(keys.d.pressed)
 })
 
 
 addEventListener('keyup', ({ key }) => {
     console.log(key)
     switch (key) {
-        case 'w':
-            player.velocity.y = 0
+        case 'w': 
+            keys.w.pressed = false
             break
         case 'a':
-            player.velocity.x = 0
+            keys.a.pressed = false
             break
         case 's':
-            player.velocity.y = 0
+            keys.s.pressed = false
             break
         case 'd':
-            player.velocity.x = 0
+            keys.d.pressed = false
             break
     }
     console.log(player.velocity)
